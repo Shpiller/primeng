@@ -36,8 +36,8 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
                 <ul class="ui-autocomplete-items ui-autocomplete-list ui-widget-content ui-widget ui-corner-all ui-helper-reset">
                     <li *ngFor="let option of suggestions" [ngClass]="{'ui-autocomplete-list-item ui-corner-all':true,'ui-state-highlight':(highlightOption==option)}"
                         (mouseenter)="highlightOption=option" (mouseleave)="highlightOption=null" (click)="selectItem(option)">
-                        <span *ngIf="!itemTemplate">{{field ? option[field] : option}}</span>
-                        <template *ngIf="itemTemplate" [pTemplateWrapper]="itemTemplate" [item]="option"></template>
+                        <span *ngIf="!filteredTemplate">{{field ? option[field] : option}}</span>
+                        <template *ngIf="filteredTemplate" [pTemplateWrapper]="filteredTemplate" [item]="option"></template>
                     </li>
                 </ul>
             </div>
@@ -91,7 +91,7 @@ export class AutoComplete implements AfterViewInit,DoCheck,AfterViewChecked,Cont
     
     @Input() multiple: boolean;
     
-    @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>;
+    @ContentChild('filteredTemplate') filteredTemplate: TemplateRef<any>;
 
     @ContentChild('selectedTemplate') selectedTemplate: TemplateRef<any>;
     
