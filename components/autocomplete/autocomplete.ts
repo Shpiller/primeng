@@ -22,10 +22,9 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
             [ngClass]="{'ui-autocomplete-input':true,'ui-autocomplete-dd-input':dropdown}"
             ><ul *ngIf="multiple" class="ui-autocomplete-multiple-container ui-widget ui-inputtext ui-state-default ui-corner-all" (click)="multiIn.focus()">
                 <li #token *ngFor="let val of value" class="ui-autocomplete-token ui-state-highlight ui-corner-all">
-                    <span class="ui-autocomplete-token-icon fa fa-fw fa-close" (click)="removeItem(token)">
-                        <ng-content select=".ui-autocomplete-token-icon-content"></ng-content>                    
-                    </span>
-                    <span class="ui-autocomplete-token-label">{{field ? val[field] : val}}</span>
+                    <span *ngIf="!selectedTemplate" class="ui-autocomplete-token-icon fa fa-fw fa-close" (click)="removeItem(token)"></span>
+                    <span *ngIf="!selectedTemplate" class="ui-autocomplete-token-label">{{field ? val[field] : val}}</span>
+                    <template *ngIf="selectedTemplate" [pTemplateWrapper]="selectedTemplate" [item]="val"></template>
                 </li>
                 <li class="ui-autocomplete-input-token">
                     <input #multiIn type="text" pInputText [attr.placeholder]="placeholder" (input)="onInput($event)" (keydown)="onKeydown($event)" (focus)="onFocus()" (blur)="onBlur()" autocomplete="off">
@@ -93,6 +92,8 @@ export class AutoComplete implements AfterViewInit,DoCheck,AfterViewChecked,Cont
     @Input() multiple: boolean;
     
     @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>;
+
+    @ContentChild('selectedTemplate') selectedTemplate: TemplateRef<any>;
     
     value: any;
     
