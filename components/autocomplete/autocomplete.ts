@@ -22,7 +22,9 @@ export const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
             [ngClass]="{'ui-autocomplete-input':true,'ui-autocomplete-dd-input':dropdown}"
             ><ul *ngIf="multiple" class="ui-autocomplete-multiple-container ui-widget ui-inputtext ui-state-default ui-corner-all" (click)="multiIn.focus()">
                 <li #token *ngFor="let val of value" class="ui-autocomplete-token ui-state-highlight ui-corner-all">
-                    <span class="ui-autocomplete-token-icon fa fa-fw fa-close" (click)="removeItem(token)"></span>
+                    <span class="ui-autocomplete-token-icon fa fa-fw fa-close" (click)="removeItem(token)">
+                        <ng-content select=".ui-autocomplete-token-icon-content"></ng-content>                    
+                    </span>
                     <span class="ui-autocomplete-token-label">{{field ? val[field] : val}}</span>
                 </li>
                 <li class="ui-autocomplete-input-token">
